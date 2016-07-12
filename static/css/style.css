@@ -1,0 +1,60 @@
+/*GLOBAL*/
+body{
+    text-align: center;
+}
+form{
+    display: inline-block;
+}
+#loginregister{
+    background: lightgray;
+    display: inline-block;
+    border-radius: 5px;
+    margin: 20px;
+    width: 300px;
+    max-width: 300px;
+}
+
+
+#userscontainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.idcard{
+    flex: 0 0 500px;
+    max-width: 500px;
+    background: white;
+    margin: 10px;
+    border: 3px solid gray;
+    box-shadow: 10px 10px 10px lightgray;
+    border-radius: 15px;
+}
+.idhead{
+    background: darkblue;
+    color: white;
+    margin: 0px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 10px;
+}
+.idhead>h3{
+    margin: 0px;
+}
+.labelvalues{
+    margin: 30px 0px;
+}
+.labels>p{
+    text-align: right;
+}
+p{
+    margin: 0px;
+    font-size: 1.3em;
+}
+.labels{
+    display: inline-block;
+    font-weight: bold;
+}
+.values{
+    display: inline-block;
+    margin-left: 50px;
+}

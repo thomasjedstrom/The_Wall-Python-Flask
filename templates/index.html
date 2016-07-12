@@ -1,0 +1,86 @@
+<html>
+<head>
+  <title>Login and Registration</title>
+  <!-- CSS Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <!-- CSS JQuery UI -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+  <!-- CSS My Style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- JS JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <!-- JS Jquery UI -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <!-- JS My JS -->
+  <script src="{{ url_for('static', filename='js/my_script.js') }}"></script>
+
+</head>
+<body>
+
+  <h1>Welcome!</h1>
+  <h2>Please login or register.</h2>
+
+  <!-- FLASH MESSAGES -->
+<ul class="flashes">
+  {% with messages = get_flashed_messages(category_filter=["error"], with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{message}}</li>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</ul>
+
+<!-- Login -->
+<div id="loginregister" class="accordion">
+  <h2>Login</h2>
+  <form action="/login" method="POST">
+    <div class="form-group">
+      <label for="user_name" class="">Username:</label>
+      <input type="text" name="user_name" id="user_name" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="email" class="">Password:</label>
+      <input type="text" name="pw" id="pw" class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Login" class="btn btn-info">
+    </div>
+  </form>
+<!-- Register -->
+  <h3>Register</h3>
+  <div>
+  <form action='/register' method='POST' class="">
+    <div class="form-group">
+      <label for="user_name" class="">Username:</label>
+      <input type="text" name="user_name" id="user_name" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="first_name" class="">First Name:</label>
+      <input type="text" name="first_name" id="first_name" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="last_name" class="">Last Name:</label>
+      <input type="text" name="last_name" id="last_name" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="email" class="">Email:</label>
+      <input type="text" name="email" id="email" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="email" class="">Password:</label>
+      <input type="text" name="pw" id="pw" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="email" class="">Confirm Password:</label>
+      <input type="text" name="cpw" id="cpw" class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Add" class="btn btn-info">
+    </div>    
+  </form>
+  </div>
+</div>
+</body>
+</html>

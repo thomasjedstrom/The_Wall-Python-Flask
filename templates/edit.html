@@ -1,0 +1,45 @@
+<html>
+<head>
+  <title>Friends</title>
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  {% for friends in all_friends: %}
+    <div class="w3-card-8 w3-round w3-border">
+      <div class="w3-container w3-blue">
+        <h2>Edit: {{ friends['first_name'] }} {{ friends['last_name'] }}</h2>
+      </div>
+      <form action="/friends/{{ friends['id'] }}" method="POST" id="editform">
+        <div class="labelvalues">
+          <div class="labels">
+            <p>ID:</p>
+            <p>First Name:</p>
+            <p>Last Name:</p>
+            <p>Email:</p>  
+          </div>
+          <div class="values">
+            <p>{{ friends['id'] }}</p>
+          <p>{{ friends['first_name'] }}</p>
+          <p>{{ friends['last_name'] }}</p>
+          <p>{{ friends['email'] }}</p>
+          </div>
+        </div>
+
+        <label for="first_name" class="w3-label">New First Name:</label>
+        <input type="text" name="first_name" id="first_name" class="w3-input w3-border w3-round-large"><br>
+        
+        <label for="last_name" class="w3-label">New Last Name:</label>
+        <input type="text" name="last_name" id="last_name" class="w3-input w3-border w3-round-large"><br>
+        
+        <label for="email" class="w3-label">New Email:</label>
+        <input type="text" name="email" id="email" class="w3-input w3-border w3-round-large"><br>
+
+        <input type="submit" value="Update" class="w3-btn w3-round w3-border">
+      </form>
+    </div>
+  {% endfor %}
+
+</body>
+</html>
