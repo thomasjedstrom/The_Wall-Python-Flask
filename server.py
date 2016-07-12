@@ -87,7 +87,6 @@ def register():
 def wall():
     post_query = "SELECT messages.id AS 'message_id', messages.message, messages.created_at, users.user_name AS 'message_user_name', comments.id AS 'comment_id', comments.comment, comments.created_at AS 'comment_created_at', commenting_users.user_name AS commenting_user FROM messages LEFT JOIN users ON messages.user_id=users.id LEFT JOIN comments ON messages.id=comments.message_id LEFT JOIN users AS commenting_users ON comments.user_id=commenting_users.id"
     all_messages = mysql.query_db(post_query)
-    print all_messages
     return render_template('wall.html', all_messages=all_messages, name=session['name'])
 
 @app.route('/message', methods=['POST'])
@@ -106,6 +105,7 @@ def comment():
                     'user_id': session['id'],
                     'comment': request.form['comment']
                 }
+    print query_data
     mysql.query_db(comment_query, query_data)
     return redirect('/wall')
 

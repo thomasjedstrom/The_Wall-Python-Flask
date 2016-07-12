@@ -25,42 +25,45 @@
 </ul>
 
 
-<p>Post a message</p>
+<h1>Hey, {{ name }},</h1>
+<h2>Leave a Message!</h2>
 <form action="/message" method="POST">
-	<textarea name="message" id="messagepost" cols="80" rows="5"></textarea>
-	<input type="submit" value="Post a Message">
+	<textarea name="message" id="messagepost" cols="120" rows="5"></textarea><br>
+	<input type="submit" value="Post a Message" class="w3-btn w3-indigo btn">
 </form>
 
 <div id="postscontainer">
 {% set last_mess_id = -1 %}
 {% for messages in all_messages: %}
-	<div class="">
+	<div class="w3-container w3-leftbar">
 		{% if last_mess_id != messages['message_id'] %}
-		<div class="w3-container w3-cyan">
-			<h3>{{ messages['message_user_name'] }} {{ messages['created_at'] }}</h3>
-		</div>
-		<div class="posts">
-			<p>{{ messages['message'] }}</p>
-		</div>
+			<div class="w3-container w3-leftbar messageblock">
+				<div class="messagehead">
+					<h3><b>{{ messages['message_user_name'] }}</b> {{ messages['created_at'] }}</h3>
+				</div>
+				<div class="messagecontent w3-container">
+					<p>{{ messages['message'] }}</p>
+				</div>
+				<div class="">
+					<form action="/comment" method="POST">
+						<textarea name="comment" cols="120" rows="5"></textarea>
+						<input type="hidden" name="action" value="{{ messages['message_id'] }}"><br>
+						<input type="submit" value="Post a Comment" class="w3-btn w3-green btn">
+					</form>
+				</div>
+			</div>
 		{% endif %}
 		{% set last_mess_id = messages['message_id'] %}
 		{% if messages['comment_id'] != None %}
-		<div class="comment">
-			<div class="w3-container w3-cyan">
-				<h3>{{ messages['commenting_user'] }} {{ messages['comment_created_at']}}</h3>
+			<div class="w3-leftbar w3-sand commentcontainer">
+				<div class="commenthead">
+					<h3><b>{{ messages['commenting_user'] }}</b> {{ messages['comment_created_at']}}</h3>
+				</div>
+				<div class="comment">
+					<p>"{{ messages['comment'] }}"</p>
+				</div>	
 			</div>
-			<div class="comment">
-				<p>{{ messages['comment'] }}</p>
-			</div>	
-		</div>
 		{% endif %}
-		<div class="commentsfield">
-			<form action="/comment" method="POST">
-				<textarea name="comment" cols="80" rows="5"></textarea>
-				<input type="hidden" name="action" value="{{ messages['message_id'] }}">
-				<input type="submit" value="Post a Comment">
-			</form>
-		</div>
 	</div>
 {% endfor %}
 </div>
