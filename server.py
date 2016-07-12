@@ -21,8 +21,11 @@ def login():
     user_query = "SELECT * FROM users WHERE user_name = :user_name LIMIT 1"
     query_data = { 'user_name': user_name }
     user = mysql.query_db(user_query, query_data) # user will be returned in a list
+    print user
     if bcrypt.check_password_hash(user[0]['pw_hash'], password):
         session['name'] = user_name
+        session['id'] = user[0]['id']
+        print session['id']
         return redirect('/wall')
     else:
         flash('Invalid user or password', 'error')
@@ -82,9 +85,29 @@ def register():
 
 @app.route('/wall')
 def wall():
-    post_query = "SELECT messages.message, messages.created_at, users.user_name FROM messages JOIN users ON messages.user_id=users.id"
+    post_query = "SELECT messages.id AS 'message_id', messages.message, messages.created_at, users.user_name AS 'message_user_name', comments.id AS 'comment_id', comments.comment, comments.created_at AS 'comment_created_at', commenting_users.user_name AS commenting_user FROM messages LEFT JOIN users ON messages.user_id=users.id LEFT JOIN comments ON messages.id=comments.message_id LEFT JOIN users AS commenting_users ON comments.user_id=commenting_users.id"
     all_messages = mysql.query_db(post_query)
+    print all_messages
     return render_template('wall.html', all_messages=all_messages, name=session['name'])
+
+@app.route('/message', methods=['POST'])
+def message():
+    message_query = "INSERT INTO messages (user_id, message, created_at, updated_at) VALUES (:user_id, :message, NOW(), NOW())"
+    query_data = { 'user_id': session['id'],
+                    'message': request.form['message']
+                }
+    mysql.query_db(message_query, query_data)
+    return redirect('/wall')
+
+@app.route('/comment', methods=['POST'])
+def comment():
+    comment_query = "INSERT INTO comments (message_id, user_id, comment, created_at, updated_at) VALUES (:message_id, :user_id, :comment, NOW(), NOW())"
+    query_data = {  'message_id': request.form['action'],
+                    'user_id': session['id'],
+                    'comment': request.form['comment']
+                }
+    mysql.query_db(comment_query, query_data)
+    return redirect('/wall')
 
 
 
