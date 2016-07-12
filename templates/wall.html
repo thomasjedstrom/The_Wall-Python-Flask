@@ -39,10 +39,10 @@
 		{% if last_mess_id != messages['message_id'] %}
 			<div class="w3-container w3-leftbar messageblock">
 				<div class="messagehead">
-					<h3><b>{{ messages['message_user_name'] }}</b> {{ messages['created_at'] }}</h3>
+					<h3><b>{{ messages['message_user_name'] }}</b> {{ messages['message_created_at'] }}</h3>
 				</div>
 				<div class="messagecontent w3-container">
-					<p>{{ messages['message'] }}</p>
+					<p>"{{ messages['message'] }}"</p>
 				</div>
 				<div class="">
 					<form action="/comment" method="POST">

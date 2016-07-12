@@ -26,6 +26,7 @@ form{
 .messageblock{
     margin: 10px 0px;
     background: lightblue;
+    margin-top: 50px;
 }
 
 #postscontainer{
@@ -33,13 +34,13 @@ form{
     margin: auto;
 }
 .messagehead{
-    border-top: 1px solid black;
     text-align: left;
 }
 .messagecontent{
     font-size: 1.3em;
     text-align: left;
     text-indent: 2em;
+    margin-bottom: 50px;
 }
 
 .commentcontainer{
