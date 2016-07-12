@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>The Wall</title>
+	<!-- CSS W3 -->
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+	<!-- CSS JQuery UI -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<!-- CSS My Style -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+	<!-- JS JQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<!-- JS Jquery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<!-- JS My JS -->
+	<script src="{{ url_for('static', filename='js/my_script.js') }}"></script>
+</head>
+<body>
+<ul class="w3-navbar w3-card-8 w3-light-grey w3-xlarge">
+	<li><a href="#">The Wall</a></li>
+	<li class="w3-right">Welcome {{ name }}</li>
+	<li class="w3-right"><a href="#">Logout</a></li>
+</ul>
+
+
+<p>Post a message</p>
+<form action="/post" method="POST">
+	<textarea name="post" id="post" cols="80" rows="5"></textarea>
+	<input type="submit" value="Post a Message">
+</form>
+
+<div id="postscontainer">
+{% for messages in all_messages: %}
+<div class="">
+	<div class="w3-container w3-cyan">
+		<h3>{{ messages['user_name'] }} {{ messages['created_at'] }}</h3>
+	</div>
+	<div class="posts">
+		<p>{{ messages['message'] }}</p>
+	</div>
+	<div class="comments">
+		
+	</div>
+	<dic class="commentsfield">
+		<form action="/comment" method="POST"></form>
+		<textarea name="comment" cols="80" rows="5"></textarea>
+	</dic>
+</div>
+{% endfor %}
+</div>
+
+
+
+	
+</body>
+</html>
