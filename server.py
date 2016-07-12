@@ -109,7 +109,10 @@ def comment():
     mysql.query_db(comment_query, query_data)
     return redirect('/wall')
 
-
+@app.route('/logout')
+def logout():
+    session.pop('id')
+    return redirect('/')
 
 
 
