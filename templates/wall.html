@@ -37,12 +37,16 @@
 {% for messages in all_messages: %}
 	<div class="w3-container w3-leftbar">
 		{% if last_mess_id != messages['message_id'] %}
+			{% set author_id = messages['author_id'] %}
 			<div class="w3-container w3-leftbar messageblock">
 				<div class="messagehead">
 					<h3><b>{{ messages['message_user_name'] }}</b> {{ messages['message_created_at'] }}</h3>
 				</div>
 				<div class="messagecontent w3-container">
 					<p>"{{ messages['message'] }}"</p>
+					{% if session['id'] == author_id  %}
+						<button class="btn delete">DELETE</button>
+					{% endif %}
 				</div>
 				<div class="">
 					<form action="/comment" method="POST">

@@ -85,7 +85,7 @@ def register():
 
 @app.route('/wall')
 def wall():
-    post_query = "SELECT messages.id AS 'message_id', messages.message, DATE_FORMAT(messages.created_at, '%M %D, %Y') AS message_created_at, users.user_name AS 'message_user_name', comments.id AS 'comment_id', comments.comment, DATE_FORMAT(comments.created_at, '%M %D, %Y')  AS 'comment_created_at', commenting_users.user_name AS commenting_user FROM messages LEFT JOIN users ON messages.user_id=users.id LEFT JOIN comments ON messages.id=comments.message_id LEFT JOIN users AS commenting_users ON comments.user_id=commenting_users.id ORDER BY messages.created_at ASC, comments.created_at DESC"
+    post_query = "SELECT messages.user_id AS author_id, messages.id AS 'message_id', messages.message, DATE_FORMAT(messages.created_at, '%M %D, %Y') AS message_created_at, users.user_name AS 'message_user_name', comments.id AS 'comment_id', comments.comment, DATE_FORMAT(comments.created_at, '%M %D, %Y')  AS 'comment_created_at', commenting_users.user_name AS commenting_user FROM messages LEFT JOIN users ON messages.user_id=users.id LEFT JOIN comments ON messages.id=comments.message_id LEFT JOIN users AS commenting_users ON comments.user_id=commenting_users.id ORDER BY messages.created_at ASC, comments.created_at DESC"
     all_messages = mysql.query_db(post_query)
     return render_template('wall.html', all_messages=all_messages, name=session['name'])
 
@@ -106,6 +106,13 @@ def comment():
                     'comment': request.form['comment']
                 }
     print query_data
+    mysql.query_db(comment_query, query_data)
+    return redirect('/wall')
+
+@app.route('/delete', methods=['POST'])
+def delete():
+    delete_query = "DELETE FROM messages WHERE message.id = :message.id"
+    query_data = { 'message_id': request.form['action']}
     mysql.query_db(comment_query, query_data)
     return redirect('/wall')
 

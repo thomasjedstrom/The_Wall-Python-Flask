@@ -23,6 +23,10 @@ form{
     float: right;
     margin-bottom: 20px;
 }
+.delete{
+    background: red;
+    color: white;
+}
 .messageblock{
     margin: 10px 0px;
     background: lightblue;
