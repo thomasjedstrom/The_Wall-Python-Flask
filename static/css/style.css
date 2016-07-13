@@ -45,6 +45,7 @@ form{
     text-align: left;
     text-indent: 2em;
     margin-bottom: 50px;
+    color: #666;
 }
 
 .commentcontainer{
@@ -58,4 +59,5 @@ form{
     text-align: left;
     text-indent: 4em;
     padding-bottom: 10px;
+    color: #666;
 }

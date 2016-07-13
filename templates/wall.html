@@ -45,7 +45,10 @@
 				<div class="messagecontent w3-container">
 					<p>"{{ messages['message'] }}"</p>
 					{% if session['id'] == author_id  %}
-						<button class="btn delete">DELETE</button>
+						<form action="/delete" method="POST">
+							<input type="hidden" name="action" value="{{ messages['message_id'] }}">
+							<input type="submit" value="Delete" class="delete">
+						</form>
 					{% endif %}
 				</div>
 				<div class="">
