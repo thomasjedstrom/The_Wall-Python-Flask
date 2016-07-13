@@ -18,18 +18,22 @@ def index():
 def login():
     user_name = request.form['user_name']
     password = request.form['pw']
-    user_query = "SELECT * FROM users WHERE user_name = :user_name LIMIT 1"
-    query_data = { 'user_name': user_name }
-    user = mysql.query_db(user_query, query_data) # user will be returned in a list
-    print user
-    if bcrypt.check_password_hash(user[0]['pw_hash'], password):
-        session['name'] = user_name
-        session['id'] = user[0]['id']
-        print session['id']
-        return redirect('/wall')
-    else:
-        flash('Invalid user or password', 'error')
+    if len(user_name) < 1 or len(password) < 1:
+        flash('Username and/or Password cannot be blank', 'error')
         return redirect('/')
+    else:
+        user_query = "SELECT * FROM users WHERE user_name = :user_name LIMIT 1"
+        query_data = { 'user_name': user_name }
+        user = mysql.query_db(user_query, query_data) # user will be returned in a list
+        print user
+        if bcrypt.check_password_hash(user[0]['pw_hash'], password):
+            session['name'] = user_name
+            session['id'] = user[0]['id']
+            print session['id']
+            return redirect('/wall')
+        else:
+            flash('Invalid user or password', 'error')
+            return redirect('/')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -81,6 +85,9 @@ def register():
                         'pw_hash': pw_hash 
                         }
         mysql.query_db(insert_query, query_data)
+
+        session['name'] = user_name
+        session['id'] = result.lastrowid
         return redirect('/wall')
 
 @app.route('/wall')
@@ -122,7 +129,12 @@ def delete():
 
 @app.route('/logout')
 def logout():
-    session.pop('id')
+    if 'id' in session:
+        session.pop('id')
+    if 'user_name' in session:
+        session.pop('user_name')
+    if 'name' in session:
+        session.pop('name')
     return redirect('/')
 
 

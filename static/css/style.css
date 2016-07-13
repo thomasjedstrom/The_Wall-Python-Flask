@@ -13,6 +13,11 @@ form{
     width: 300px;
     max-width: 300px;
 }
+.error{
+    list-style: none;
+    color: red;
+    font-weight: bold;
+}
 
 
 
